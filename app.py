@@ -2,8 +2,8 @@ import pdfplumber
 from fastapi import FastAPI, UploadFile, File
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 from fastapi.responses import FileResponse
-from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
+from resume_filter import filter_resume_text, is_relevant_chunk
 
 app = FastAPI()
 
@@ -14,7 +14,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 
 
 MODEL_DIR = "gramformer_lora"
@@ -55,10 +54,17 @@ async def upload_pdf(file: UploadFile = File(...)):
         for page in pdf.pages:
             text = page.extract_text()
             if text:
-                lines = text.split("\n")
-                for line in lines:
-                    original_texts.append(line)
-                    enhanced_texts.append(enhance_line(line))
+                # Filter the page text to remove headers/contact info/artifacts
+                cleaned = filter_resume_text(text)
+                # Split into paragraphs/chunks by blank line and enhance each chunk
+                chunks = [c.strip() for c in cleaned.split("\n\n") if c.strip()]
+                for chunk in chunks:
+                    # Skip non-relevant chunks
+                    if not is_relevant_chunk(chunk):
+                        continue
+
+                    original_texts.append(chunk)
+                    enhanced_texts.append(enhance_line(chunk))
 
     # Write to TXT file
     with open(OUTPUT_TXT, "w", encoding="utf-8") as out:
