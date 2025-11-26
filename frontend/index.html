@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AI Resume Enhancer</title>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: "Poppins", Arial, sans-serif;
+        background: linear-gradient(135deg, #3a0ca3, #240046);
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+    }
+
+    .container {
+        background: rgba(255, 255, 255, 0.13);
+        backdrop-filter: blur(12px);
+        width: 540px;
+        padding: 40px 35px;
+        border-radius: 25px;
+        box-shadow: 0 0 30px rgba(0,0,0,0.4);
+        text-align: center;
+    }
+
+    h2 {
+        font-size: 30px;
+        margin-bottom: 12px;
+        font-weight: 600;
+    }
+
+    p {
+        color: #e6d6ff;
+        margin-bottom: 20px;
+        font-size: 15px;
+    }
+
+    /* FIXED UPLOAD BOX */
+    .upload-box {
+        border: 2px dashed #c77dff;
+        width: 100%;
+        padding: 30px 20px;
+        border-radius: 20px;
+        background: rgba(255,255,255,0.18);
+        cursor: pointer;
+        display: block;
+        transition: 0.25s ease;
+        text-align: center;
+        box-sizing: border-box;
+    }
+
+    .upload-box:hover {
+        background: rgba(255,255,255,0.27);
+        transform: scale(1.02);
+    }
+
+    .upload-label-text {
+        font-weight: 600;
+        font-size: 17px;
+        color: #f3ccff;
+        display: block;
+        margin-bottom: 8px;
+    }
+
+    #fileName {
+        font-size: 14px;
+        color: #f7d8ff;
+        margin-top: 5px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+    }
+
+    input[type="file"] {
+        display: none;
+    }
+
+    button {
+        margin-top: 28px;
+        padding: 15px;
+        font-size: 19px;
+        border: none;
+        border-radius: 12px;
+        background: linear-gradient(90deg, #4361ee, #4cc9f0);
+        color: white;
+        cursor: pointer;
+        width: 100%;
+        transition: 0.3s ease;
+        font-weight: bold;
+        box-shadow: 0 0 18px rgba(67,97,238,0.5);
+    }
+
+    button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 0 26px rgba(76,201,240,0.8);
+    }
+
+    #status {
+        margin-top: 25px;
+        font-size: 16px;
+        font-weight: 600;
+        color: #fcd3ff;
+    }
+
+</style>
+
+</head>
+<body>
+
+<div class="container">
+    <h2>AI Resume Enhancer</h2>
+    <p>Upload your resume PDF to receive a professionally improved version.</p>
+
+    <!-- Perfect Full-Width Upload Box -->
+    <label class="upload-box" onclick="document.getElementById('fileInput').click()">
+        <span class="upload-label-text">Select Your PDF</span>
+        <span id="fileName">No file selected</span>
+    </label>
+
+    <input id="fileInput" type="file" accept="application/pdf" onchange="showFileName()">
+
+    <button onclick="uploadPDF()">Enhance Resume</button>
+
+    <div id="status"></div>
+</div>
+
+<script>
+function showFileName() {
+    const fileInput = document.getElementById("fileInput");
+    const fileName = document.getElementById("fileName");
+
+    if (fileInput.files.length > 0) {
+        fileName.innerText = fileInput.files[0].name;
+    }
+}
+
+async function uploadPDF() {
+    const fileInput = document.getElementById("fileInput");
+    const statusBox = document.getElementById("status");
+
+    if (fileInput.files.length === 0) {
+        alert("Please select a PDF file first!");
+        return;
+    }
+
+    const file = fileInput.files[0];
+    statusBox.innerText = "Processing your resume…";
+
+    let formData = new FormData();
+    formData.append("file", file);
+
+    try {
+        const response = await fetch("http://127.0.0.1:8000/upload_pdf/", {
+            method: "POST",
+            body: formData
+        });
+
+        if (!response.ok) {
+            statusBox.innerText = "Error: Could not process PDF.";
+            return;
+        }
+
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "enhanced_resume.txt";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+
+        statusBox.innerText = "Download Ready! 🎉";
+
+    } catch (error) {
+        console.error(error);
+        statusBox.innerText = "An error occurred. Try again.";
+    }
+}
+</script>
+
+</body>
+</html>
