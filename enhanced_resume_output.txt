@@ -5,13 +5,13 @@ ORIGINAL: and backend features. Worked on real projects involving automation, de
 ENHANCED: Worked on real projects involving automation, deployments and database databases.
 
 ORIGINAL: - Backend: Python (FastAPI, Flask), Node.js (Express)
-ENHANCED: - Backend: Python (FastAPI, Flask), Node.js (Express) and Python (FastAPI).
+ENHANCED: - Backend: Python (FastAPI, Flask), Node.js (Express)
 
 ORIGINAL: - Frontend: React.js, JavaScript, HTML, CSS
-ENHANCED: - Frontend: React.js, JavaScript, CSS, HTML, CSS, HTML, CSS, and HTML.
+ENHANCED: - Frontend: React.js, JavaScript, HTML, CSS
 
 ORIGINAL: - Databases: PostgreSQL, MongoDB, Redis
-ENHANCED: - Databases: PostgreSQL, MongoDB, Redis, PostgreSQL, MongoDB, Redis.
+ENHANCED: - Databases: PostgreSQL, MongoDB, Redis
 
 ORIGINAL: - Core Concepts: REST APIs, authentication, JSON, microservices basics
 ENHANCED: - Core Concepts: REST APIs, authentication, JSON, microservices, etc.
@@ -38,10 +38,10 @@ ORIGINAL: 2. Automated Video Workflow Tool
 ENHANCED: Automated Video Workflow Tool, ensuring a smoother and more efficient video workflow.
 
 ORIGINAL: Created a backend service using Python and FFmpeg that compresses videos, extracts frames and
-ENHANCED: Created a backend service using Python and FFmpeg that compresses videos, extracts frames and rewrites frames.
+ENHANCED: Created a backend service using Python and FFmpeg that compresses videos, extracts frames and
 
 ORIGINAL: generates small previews.
-ENHANCED: Creates a small preview of a product, generating a small preview of a product.
+ENHANCED: generates small previews.
 
 ORIGINAL: 3. Inventory Management Dashboard
 ENHANCED: 3. Inventory Management Dashboard, ensuring a robust and efficient inventory management system.
@@ -68,7 +68,7 @@ ORIGINAL: - Fixed deployment errors in Docker services.
 ENHANCED: - Fixed deployment errors in Docker services, reducing deployment errors by 20%.
 
 ORIGINAL: Junior Web Developer — CodeSphere Labs (2025–Present)
-ENHANCED: Senior Web Developer — CodeSphere Labs (2025–Present) — CodeSphere Labs (2025–Present).
+ENHANCED: Junior Web Developer — CodeSphere Labs (2025–Present)
 
 ORIGINAL: - Working on full-stack modules for live client projects.
 ENHANCED: - Working on full-stack modules for live client projects.
@@ -91,3 +91,11 @@ ENHANCED: - Runner-up in internal hackathon for automation project.
 ORIGINAL: Cloud learning, automation scripts, reading tech articles.
 ENHANCED: Cloud learning, automation scripts, reading tech articles.
 
+
+============================================================
+ENHANCEMENT STATISTICS
+============================================================
+Total lines processed: 31
+Valid enhancements:    20 (64.5%)
+Rejected (kept orig):  11 (35.5%)
+============================================================
