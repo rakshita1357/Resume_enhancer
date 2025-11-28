@@ -3,4 +3,5 @@ resume_enhancer_t5/
 resume_enhancer_t5_final/
 resume_enhancer_t5_fixed/
 resume_model/
-.idea/
+.idea/venv/
+venv/
