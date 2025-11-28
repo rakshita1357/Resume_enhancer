@@ -3,7 +3,7 @@ from fastapi import FastAPI, UploadFile, File
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 from fastapi.responses import FileResponse
 from starlette.middleware.cors import CORSMiddleware
-from resume_filter import filter_resume_text, is_relevant_chunk
+from resume_filter import is_relevant_chunk
 
 app = FastAPI()
 
@@ -25,18 +25,30 @@ OUTPUT_TXT = "enhanced_resume_output.txt"
 
 def enhance_line(text: str):
     text = text.strip()
-    if not text:
+    if not text or len(text) < 15:  # Skip very short lines
         return ""
 
     inp = "enhance: " + text
-    inputs = tokenizer(inp, return_tensors="pt", truncation=True)
+
+    # Count tokens to detect truncation
+    token_count = len(tokenizer.encode(inp))
+
+    print(f"\n{'='*60}")
+    print(f"INPUT TO MODEL ({token_count} tokens): {inp}")
+    if token_count > 128:
+        print(f"⚠️  WARNING: Input truncated from {token_count} to 128 tokens!")
+    print(f"{'='*60}\n")
+
+    inputs = tokenizer(inp, return_tensors="pt", truncation=True, max_length=128)
     outputs = model.generate(
         **inputs,
-        max_length=128,
+        max_length=256,  # Increased to allow longer outputs
         num_beams=4,
         early_stopping=True
     )
-    return tokenizer.decode(outputs[0], skip_special_tokens=True)
+    enhanced = tokenizer.decode(outputs[0], skip_special_tokens=True)
+    print(f"OUTPUT FROM MODEL: {enhanced}\n")
+    return enhanced
 
 
 @app.post("/upload_pdf/")
@@ -54,17 +66,32 @@ async def upload_pdf(file: UploadFile = File(...)):
         for page in pdf.pages:
             text = page.extract_text()
             if text:
-                # Filter the page text to remove headers/contact info/artifacts
-                cleaned = filter_resume_text(text)
-                # Split into paragraphs/chunks by blank line and enhance each chunk
-                chunks = [c.strip() for c in cleaned.split("\n\n") if c.strip()]
-                for chunk in chunks:
-                    # Skip non-relevant chunks
-                    if not is_relevant_chunk(chunk):
+                # Process each line individually from the original text
+                lines = text.splitlines()
+
+                print(f"\n🔍 DEBUG: Found {len(lines)} raw lines from PDF")
+
+                for idx, line in enumerate(lines):
+                    line = line.strip()
+
+                    # Skip empty lines
+                    if not line:
                         continue
 
-                    original_texts.append(chunk)
-                    enhanced_texts.append(enhance_line(chunk))
+                    # Skip very short lines (likely headers or artifacts)
+                    if len(line) < 15:
+                        continue
+
+                    # Apply relevance filtering
+                    if not is_relevant_chunk(line):
+                        print(f"⏭️  Line {idx+1}: SKIPPED (filtered) - {line[:60]}...")
+                        continue
+
+                    # Now enhance this individual line
+                    enhanced = enhance_line(line)
+                    if enhanced:  # Only add if not empty
+                        original_texts.append(line)
+                        enhanced_texts.append(enhanced)
 
     # Write to TXT file
     with open(OUTPUT_TXT, "w", encoding="utf-8") as out:

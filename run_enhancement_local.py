@@ -1,6 +1,6 @@
 import pdfplumber
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
-from resume_filter import filter_resume_text, is_relevant_chunk
+from resume_filter import is_relevant_chunk
 
 MODEL_DIR = "gramformer_lora"
 OUTPUT_TXT = "enhanced_resume_output.txt"
@@ -18,22 +18,50 @@ with pdfplumber.open(PDF) as pdf:
     for page in pdf.pages:
         text = page.extract_text()
         if text:
-            cleaned = filter_resume_text(text)
-            chunks = [c.strip() for c in cleaned.split("\n\n") if c.strip()]
-            for chunk in chunks:
-                if not is_relevant_chunk(chunk):
+            # Process each line individually from the original text
+            lines = text.splitlines()
+
+            print(f"\n🔍 DEBUG: Found {len(lines)} raw lines from PDF")
+
+            for idx, line in enumerate(lines):
+                line = line.strip()
+
+                # Skip empty lines
+                if not line:
                     continue
+
+                # Skip very short lines (likely headers or artifacts)
+                if len(line) < 15:
+                    continue
+
+                # Apply relevance filtering
+                if not is_relevant_chunk(line):
+                    print(f"⏭️  Line {idx+1}: SKIPPED (filtered) - {line[:60]}...")
+                    continue
+
                 # prepare input
-                inp = "enhance: " + chunk.strip()
-                inputs = tokenizer(inp, return_tensors="pt", truncation=True)
+                inp = "enhance: " + line
+
+                # Count tokens to see if truncation happens
+                token_count = len(tokenizer.encode(inp))
+
+                print(f"\n{'='*60}")
+                print(f"INPUT TO MODEL ({token_count} tokens): {inp}")
+                if token_count > 128:
+                    print(f"⚠️  WARNING: Input truncated from {token_count} to 128 tokens!")
+                print(f"{'='*60}\n")
+
+                inputs = tokenizer(inp, return_tensors="pt", truncation=True, max_length=128)
                 outputs = model.generate(
                     **inputs,
-                    max_length=128,
+                    max_length=256,  # Increased to allow longer outputs
                     num_beams=4,
                     early_stopping=True
                 )
                 enhanced = tokenizer.decode(outputs[0], skip_special_tokens=True)
-                original_texts.append(chunk)
+                print(f"OUTPUT FROM MODEL: {enhanced}\n")
+
+                original_texts.append(line)
                 enhanced_texts.append(enhanced)
 
 print(f"Writing {OUTPUT_TXT} with {len(original_texts)} enhanced chunks...")

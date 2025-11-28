@@ -1,29 +1,8 @@
-ORIGINAL: Alex Carter
-ENHANCED: Alex Carter, a leading Alex Carter strategist, has built a strong relationship with Alex Carter, ensuring a positive return on investment.
-
-ORIGINAL: Email: alex.carter@example.com
-ENHANCED: E-mail: alex.carter@example.com.
-
-ORIGINAL: Phone: +91 9876501122
-ENHANCED: Phone: +91 9876501122 +91 9876501122.
-
-ORIGINAL: Location: Bengaluru, India
-ENHANCED: Location: Bengaluru, India, India.
-
-ORIGINAL: Professional Summary
-ENHANCED: Professional Summary, based on a 5-year-old professional summary, enables a comprehensive review of a product, ensuring a 100% success rate.
-
 ORIGINAL: Technical developer with strong experience in building web apps, API systems, cloud-based tools
 ENHANCED: Technical developer with strong experience in building web apps, APIs, and cloud-based tools.
 
 ORIGINAL: and backend features. Worked on real projects involving automation, deployments and database
 ENHANCED: Worked on real projects involving automation, deployments and database databases.
-
-ORIGINAL: management.
-ENHANCED: Implemented a centralized management system, reducing the risk of reorganization by 20%.
-
-ORIGINAL: Technical Skills
-ENHANCED: Technical Skills: Improved Technical Skills by 20%, reducing the cost of training by 20%.
 
 ORIGINAL: - Backend: Python (FastAPI, Flask), Node.js (Express)
 ENHANCED: - Backend: Python (FastAPI, Flask), Node.js (Express) and Python (FastAPI).
@@ -45,9 +24,6 @@ ENHANCED: - Cloud: AWS EC2, S3 basics, and S3 implementations.
 
 ORIGINAL: - Tools: Postman, Linux commands, VS Code
 ENHANCED: - Tools: Postman, Linux commands, VS Code, and VS Code.
-
-ORIGINAL: Major Projects
-ENHANCED: Major Projects – a major project – are based on a number of projects, reducing the cost of a project by 20%.
 
 ORIGINAL: 1. API-Based Job Recommendation Engine
 ENHANCED: Implemented API-based Job Recommendation Engine with a scalable API-based API, ensuring a seamless integration with the API.
@@ -79,9 +55,6 @@ ENHANCED: 4. DevOps Deployment Helper (DevOps Deployment Helper):
 ORIGINAL: Made a small utility that generates Docker files, runs containers and checks service health.
 ENHANCED: Made a small utility that generates Docker files, runs containers and checks service health.
 
-ORIGINAL: Work Experience
-ENHANCED: Work Experience: Integrated Work Experiences, reducing stress and reducing productivity by 20%.
-
 ORIGINAL: Software Developer Intern — TechNova Solutions (2024–2025)
 ENHANCED: — TechNova Solutions (2024–2025), a leading software developer in the industry.
 
@@ -106,9 +79,6 @@ ENHANCED: - Built a custom API layer, ensuring seamless integration with APIs.
 ORIGINAL: - Collaborated using Git, reviews and CI/CD tools.
 ENHANCED: - Collaborated using Git, reviews and CI/CD tools.
 
-ORIGINAL: Achievements
-ENHANCED: Achievements & Achievements, based on a number of key milestones, were achieved by reducing the number of achievements by 20%.
-
 ORIGINAL: - Completed 12+ technical projects.
 ENHANCED: - Completed 12+ technical projects, ensuring a seamless completion of the project.
 
@@ -117,9 +87,6 @@ ENHANCED: - Improved API response time by 25% for internal service by 20%.
 
 ORIGINAL: - Runner-up in internal hackathon for automation project.
 ENHANCED: - Runner-up in internal hackathon for automation project.
-
-ORIGINAL: Hobbies
-ENHANCED: Hobbies: The Hobbies of Hobbies and Hobbies:
 
 ORIGINAL: Cloud learning, automation scripts, reading tech articles.
 ENHANCED: Cloud learning, automation scripts, reading tech articles.
